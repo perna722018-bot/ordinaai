@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0b0d18">
+<title>OrdinaAI — Il tuo centro di controllo</title>
+<style>
+:root{--bg:#090b14;--panel:#121625;--panel2:#191f31;--line:#293149;--text:#f4f5ff;--muted:#9ba4bd;--purple:#9270ff;--blue:#4d8dff;--green:#65d69a}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 85% 0%,#27204d 0,transparent 34%),var(--bg);color:var(--text);font:15px/1.45 Inter,system-ui,-apple-system,Segoe UI,sans-serif}
+.app{min-height:100vh;display:grid;grid-template-columns:220px 1fr}.sidebar{padding:24px 16px;border-right:1px solid var(--line);background:#0b0e19;display:flex;flex-direction:column;gap:22px}.brand{font-weight:800;font-size:22px;letter-spacing:-.7px}.brand span{color:var(--purple)}.nav{display:grid;gap:8px}.nav button{background:transparent;color:var(--muted);border:0;padding:12px;border-radius:12px;text-align:left;font:inherit;cursor:pointer}.nav button.active,.nav button:hover{background:#242044;color:white}.side-note{margin-top:auto;color:var(--muted);font-size:12px}
+main{padding:32px;max-width:1450px;width:100%;margin:auto}.top{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:26px}.eyebrow{color:#b7a5ff;font-size:12px;text-transform:uppercase;letter-spacing:1.5px;font-weight:700}h1{font-size:clamp(28px,4vw,42px);line-height:1.1;margin:8px 0}p{color:var(--muted);margin:6px 0}.avatar{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#9878ff,#4b7dff);display:grid;place-items:center;font-weight:800}
+.grid{display:grid;grid-template-columns:1.15fr 1fr 1fr;gap:16px}.card{background:linear-gradient(145deg,#171c2c,#111625);border:1px solid var(--line);border-radius:18px;padding:18px;min-width:0}.card h2{font-size:16px;margin:0 0 14px}.wide{grid-column:span 2}.email,.event,.task{padding:12px;border-radius:12px;background:#1d2436;margin:9px 0}.email strong,.event strong{display:block;font-size:13px}.small{font-size:12px;color:var(--muted)}.pill{display:inline-block;padding:4px 8px;border-radius:99px;background:#29234d;color:#c9baff;font-size:11px}.event{display:flex;gap:12px;align-items:center}.time{color:#bcaaff;font-size:12px;min-width:42px}.dot{width:8px;height:8px;border-radius:50%;background:var(--purple)}.task{display:flex;gap:10px;align-items:center}.task input{accent-color:var(--purple);width:17px;height:17px}.task.done span{text-decoration:line-through;color:var(--muted)}.focus{display:flex;justify-content:space-between;align-items:center;background:#211d43;padding:16px;border-radius:14px;margin-top:12px}.score{font-size:26px;font-weight:800;color:#b9a5ff}.add{display:flex;gap:8px;margin-top:12px}.add input{flex:1;min-width:0;background:#0d1120;border:1px solid var(--line);border-radius:10px;padding:11px;color:white;font:inherit}.add button,.primary{background:linear-gradient(135deg,#8665ef,#536fe8);border:0;border-radius:10px;padding:10px 14px;color:white;font-weight:700;cursor:pointer}.hint{font-size:12px;color:var(--muted);margin-top:14px}.section{display:none}.section.active{display:block}.mobilebar{display:none}
+@media(max-width:900px){.app{grid-template-columns:76px 1fr}.sidebar{padding:18px 10px}.brand{font-size:0;text-align:center}.brand:after{content:"✦";font-size:24px;color:var(--purple)}.nav button{font-size:0;text-align:center}.nav button:before{font-size:18px}.nav button[data-page=home]:before{content:"⌂"}.nav button[data-page=email]:before{content:"✉"}.nav button[data-page=calendar]:before{content:"▦"}.nav button[data-page=docs]:before{content:"▤"}.nav button[data-page=tasks]:before{content:"✓"}.nav button[data-page=automation]:before{content:"✧"}.side-note{display:none}.grid{grid-template-columns:1fr 1fr}.wide{grid-column:span 2}}
+@media(max-width:600px){.app{display:block}.sidebar{display:none}main{padding:20px 14px 90px}.grid{grid-template-columns:1fr}.wide{grid-column:auto}.top{align-items:flex-start}.mobilebar{display:flex;position:fixed;bottom:0;left:0;right:0;background:#0c1020;border-top:1px solid var(--line);justify-content:space-around;padding:10px 4px;z-index:5}.mobilebar button{border:0;background:transparent;color:var(--muted);font-size:11px;padding:6px}.mobilebar button.active{color:#c4b2ff}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="sidebar">
+  <div class="brand">✦ Ordina<span>AI</span></div>
+  <nav class="nav">
+    <button class="active" data-page="home">⌂　Panoramica</button>
+    <button data-page="email">✉　Comunicazioni</button>
+    <button data-page="calendar">▦　Calendario</button>
+    <button data-page="docs">▤　Documenti</button>
+    <button data-page="tasks">✓　Attività</button>
+    <button data-page="automation">✧　Automazioni</button>
+  </nav>
+  <div class="side-note">Prototipo dimostrativo<br>Versione 0.1 · Dati di esempio</div>
+</aside>
+<main>
+  <header class="top">
+    <div><div class="eyebrow">Il tuo spazio intelligente</div><h1 id="greeting">Buongiorno ✦</h1><p>Le informazioni importanti, finalmente in ordine.</p></div>
+    <div class="avatar">O</div>
+  </header>
+  <section id="home" class="section active">
+    <div class="grid">
+      <article class="card"><h2>✉ Comunicazioni <span class="pill">3 da rivedere</span></h2>
+        <div class="email"><strong>Conferma appuntamento</strong><span class="small">Esempio · oggi, 09:12</span></div>
+        <div class="email"><strong>Richiesta informazioni</strong><span class="small">Esempio · ieri, 17:40</span></div>
+        <div class="email"><strong>Documento da controllare</strong><span class="small">Esempio · ieri, 11:05</span></div>
+        <p class="small">In futuro: collegamento a caselle email autorizzate.</p>
+      </article>
+      <article class="card"><h2>▦ Agenda di oggi</h2>
+        <div class="event"><span class="time">10:00</span><span><strong>Rivedere le priorità</strong><span class="small">Attività personale</span></span></div>
+        <div class="event"><span class="time">14:15</span><span><strong>Appuntamento</strong><span class="small">Gessate · esempio</span></span></div>
+        <div class="event"><span class="time">17:00</span><span><strong>Tempo per il progetto</strong><span class="small">OrdinaAI</span></span></div>
+      </article>
+      <article class="card"><h2>▤ Documenti recenti</h2>
+        <div class="email"><strong>📄 Preventivo_esempio.pdf</strong><span class="small">Da classificare</span></div>
+        <div class="email"><strong>📁 Documenti personali</strong><span class="small">Cartella dimostrativa</span></div>
+        <button class="primary" onclick="showPage('docs')">Apri archivio</button>
+      </article>
+      <article class="card wide"><h2>✧ Il tuo assistente</h2>
+        <p>Da dove vuoi iniziare? Nel prototipo puoi aggiungere attività e provarne l'organizzazione.</p>
+        <div class="add"><input id="newTask" placeholder="Es. chiamare il dentista"><button onclick="addTask()">Aggiungi</button></div>
+        <div id="taskList">
+          <label class="task"><input type="checkbox"><span>Controllare le comunicazioni importanti</span></label>
+          <label class="task"><input type="checkbox"><span>Preparare i documenti necessari</span></label>
+          <label class="task"><input type="checkbox"><span>Rivedere il progetto OrdinaAI</span></label>
+        </div>
+      </article>
+      <article class="card"><h2>◎ Il tuo riepilogo</h2><p>Attività completate</p><div class="focus"><span>Progresso dimostrativo</span><span class="score" id="score">0%</span></div><p class="hint">Il punteggio si aggiorna quando completi le attività qui sopra.</p></article>
+    </div>
+  </section>
+  <section id="email" class="section"><article class="card"><h2>✉ Comunicazioni</h2><p>Qui raccoglieremo email e messaggi. Per ora sono presenti soltanto esempi fittizi.</p><div class="email">📩 Conferma appuntamento · Categoria: Calendario</div><div class="email">📩 Richiesta informazioni · Categoria: Da rispondere</div></article></section>
+  <section id="calendar" class="section"><article class="card"><h2>▦ Calendario</h2><p>Agenda dimostrativa. Gli appuntamenti non sono collegati a un calendario reale.</p><div class="event">10:00 — Rivedere le priorità</div><div class="event">14:15 — Appuntamento di esempio</div></article></section>
+  <section id="docs" class="section"><article class="card"><h2>▤ Documenti</h2><p>In questa sezione potremo classificare documenti per categoria, data e azione richiesta.</p><div class="email">📄 Documento di esempio · Da classificare</div></article></section>
+  <section id="tasks" class="section"><article class="card"><h2>✓ Attività</h2><p>Gestisci le attività dalla panoramica. Le modifiche restano in questa sessione del prototipo.</p><button class="primary" onclick="showPage('home')">Vai alle attività</button></article></section>
+  <section id="automation" class="section"><article class="card"><h2>✧ Automazioni</h2><p>In futuro potremo creare regole come: “quando arriva un messaggio con una data, proponi un evento”. Nessuna automazione reale è attiva in questa demo.</p></article></section>
+  <p class="hint">OrdinaAI v0.1 · Demo locale · Non collegata ad account o servizi esterni.</p>
+</main>
+</div>
+<nav class="mobilebar">
+  <button class="active" data-page="home">⌂<br>Home</button><button data-page="email">✉<br>Inbox</button><button data-page="calendar">▦<br>Agenda</button><button data-page="docs">▤<br>File</button><button data-page="tasks">✓<br>Attività</button>
+</nav>
+<script>
+function showPage(page){document.querySelectorAll('.section').forEach(s=>s.classList.toggle('active',s.id===page));document.querySelectorAll('[data-page]').forEach(b=>b.classList.toggle('active',b.dataset.page===page));}
+document.querySelectorAll('[data-page]').forEach(b=>b.addEventListener('click',()=>showPage(b.dataset.page)));
+function addTask(){const input=document.getElementById('newTask');const value=input.value.trim();if(!value)return;const label=document.createElement('label');label.className='task';const cb=document.createElement('input');cb.type='checkbox';const span=document.createElement('span');span.textContent=value;label.append(cb,span);document.getElementById('taskList').append(label);input.value='';updateScore();cb.addEventListener('change',()=>{label.classList.toggle('done',cb.checked);updateScore()});}
+document.querySelectorAll('#taskList input').forEach(cb=>cb.addEventListener('change',()=>{cb.parentElement.classList.toggle('done',cb.checked);updateScore()}));
+function updateScore(){const all=[...document.querySelectorAll('#taskList input')];const done=all.filter(x=>x.checked).length;document.getElementById('score').textContent=(all.length?Math.round(done/all.length*100):0)+'%';}
+document.getElementById('newTask').addEventListener('keydown',e=>{if(e.key==='Enter')addTask()});
+const hour=new Date().getHours();document.getElementById('greeting').textContent=(hour<12?'Buongiorno':hour<18?'Buon pomeriggio':'Buonasera')+' ✦';
+</script>
+</body>
+</html>
